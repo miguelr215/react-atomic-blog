@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 function createRandomPost() {
@@ -51,4 +51,12 @@ function PostProvider({ children }) {
 	);
 }
 
-export { PostProvider, PostContext };
+// custom hook/function to read the values out of the context;  to destructure in component
+function usePosts() {
+	const context = useContext(PostContext);
+	if (context === undefined)
+		throw new Error('PostContext was used outside of PostProvider');
+	return context;
+}
+
+export { PostProvider, usePosts };
